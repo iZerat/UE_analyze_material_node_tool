@@ -68,6 +68,10 @@
         .sidebar .group-item {
             font-weight: 500;
         }
+        .sidebar .toc-highlight {
+            background-color: rgba(9, 105, 218, 0.12);
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         /* 中间主内容区域 */
         .center-panel {
             flex: 1;
@@ -103,22 +107,43 @@
             padding-bottom: 8px;
             border-bottom: 1px solid #e1e4e8;
             color: #1f2328;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .right-panel-section {
             margin-bottom: 20px;
         }
-        .right-panel-section.right-panel-label {
+        .right-panel-section.hidden {
+            display: none;
+        }
+        .right-panel-label {
             font-size: 0.85em;
             font-weight: 600;
             color: #57606a;
             margin-bottom: 8px;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .generate-date {
             font-size: 0.95em;
             color: #24292e;
             font-family: "SF Mono", "Monaco", "Consolas", monospace;
+        }
+        /* 语言切换按钮 */
+        .btn-lang {
+            padding: 2px 8px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #57606a;
+            background-color: #e1e4e8;
+            border: 1px solid #d0d7de;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-lang:hover {
+            background-color: #d0d7de;
+            color: #24292e;
         }
         /* 输入区域样式 */
         .input-section-right {
@@ -187,7 +212,6 @@
             background-color: #e1e4e8;
             margin: 8px 0;
         }
-
         /* 快速跳转按钮 */
         .quick-nav-section {
             margin-top: auto;
@@ -299,6 +323,9 @@
             padding-right: 8px;
             margin-left: -8px;
             margin-right: -8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         h2.highlight-scroll {
             background-color: rgba(9, 105, 218, 0.12);
@@ -353,7 +380,6 @@
             transition: all 0.15s;
             flex-shrink: 0;
             width: 100px;
-            margin-right: 8px;
             text-align: center;
         }
         .btn-copy:hover {
@@ -367,6 +393,38 @@
             background-color: #2da44e;
             color: #fff;
             border-color: #2da44e;
+        }
+        .group-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn-group-action {
+            padding: 4px 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            color: #57606a;
+            background-color: #e1e4e8;
+            border: 1px solid #d0d7de;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            flex-shrink: 0;
+            width: 100px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .btn-group-action.copied {
+            background-color: #2da44e;
+            color: #fff;
+            border-color: #2da44e;
+        }
+        .btn-group-action:hover {
+            background-color: #d0d7de;
+            color: #24292e;
+        }
+        .btn-group-action:active {
+            background-color: #c1c1c1;
         }
         .param-prop {
             margin-left: 0;
@@ -414,7 +472,7 @@
         .right-panel::-webkit-scrollbar-thumb:hover {
             background-color: #a8a8a8;
         }
-    .hidden {
+        .hidden {
             display: none;
         }
     </style>
@@ -429,7 +487,7 @@
     <div class="main-layout">
         <!-- 左侧目录栏 -->
         <div class="sidebar" id="sidebar">
-            <div class="sidebar-title">目录</div>
+            <div class="sidebar-title" data-i18n="toc">目录</div>
             <ul id="toc-list">
             </ul>
         </div>
@@ -443,8 +501,8 @@
                 <!-- 报告内容 -->
                 <div id="report-content">
                     <div class="empty-state">
-                        <h3>等待输入</h3>
-                        <p>点击右侧「粘贴并重新生成」自动读取剪贴板并生成报告<br>或在右侧输入栏手动粘贴后点击生成</p>
+                        <h3 data-i18n="waiting">等待输入</h3>
+                        <p data-i18n="waitingDesc">点击右侧「粘贴并重新生成」自动读取剪贴板并生成报告<br>或在右侧输入栏手动粘贴后点击生成</p>
                     </div>
                 </div>
             </div>
@@ -452,15 +510,18 @@
 
         <!-- 右侧信息面板 -->
         <div class="right-panel" id="right-panel">
-            <div class="right-panel-title">操作面板</div>
+            <div class="right-panel-title">
+                <span data-i18n="panelTitle">操作面板</span>
+                <button class="btn-lang" id="lang-toggle" onclick="toggleLanguage()">EN</button>
+            </div>
 
             <!-- 粘贴并重新生成按钮 -->
-            <button class="btn-paste-generate" onclick="pasteAndGenerate()">粘贴并重新生成</button>
+            <button class="btn-paste-generate" onclick="pasteAndGenerate()" data-i18n="pasteGenerate">粘贴并重新生成</button>
 
             <!-- 输入区域 -->
             <div class="input-section-right">
                 <textarea id="material-input" placeholder="手动粘贴虚幻材质文本到这里，然后点击下方按钮生成..."></textarea>
-                <button class="btn-from-input" onclick="generateFromInput()">从输入栏中重新生成</button>
+                <button class="btn-from-input" onclick="generateFromInput()" data-i18n="inputGenerate">从输入栏中重新生成</button>
             </div>
 
             <!-- 装饰线1 -->
@@ -468,7 +529,7 @@
 
             <!-- 生成日期 -->
             <div class="right-panel-section hidden" id="date-section">
-                <div class="right-panel-label">生成日期</div>
+                <div class="right-panel-label" data-i18n="genDate">生成日期</div>
                 <div class="generate-date" id="generate-date">--</div>
             </div>
 
@@ -477,9 +538,9 @@
 
             <!-- 参数统计表格 -->
             <div class="right-panel-section hidden" id="stats-section">
-                <div class="right-panel-label">参数统计</div>
+                <div class="right-panel-label" data-i18n="paramStats">参数统计</div>
                 <table class="stats-table" id="right-stats-table">
-                    <thead><tr><th>类型</th><th>数量</th></tr></thead>
+                    <thead><tr><th data-i18n="type">类型</th><th data-i18n="count">数量</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -487,14 +548,122 @@
             <!-- 快速跳转按钮 -->
             <div class="quick-nav-section hidden" id="quick-nav-section">
                 <div class="quick-nav-buttons">
-                    <button class="btn-quick-nav" onclick="scrollToTop()">到顶部</button>
-                    <button class="btn-quick-nav" onclick="scrollToBottom()">到底部</button>
+                    <button class="btn-quick-nav" onclick="scrollToTop()" data-i18n="toTop">到顶部</button>
+                    <button class="btn-quick-nav" onclick="scrollToBottom()" data-i18n="toBottom">到底部</button>
                 </div>
             </div>
         </div>
     </div>
 
 <script>
+    // ==================== 多语言支持 ====================
+    const i18n = {
+        zh: {
+            toc: '目录',
+            waiting: '等待输入',
+            waitingDesc: '点击右侧「粘贴并重新生成」自动读取剪贴板并生成报告<br>或在右侧输入栏手动粘贴后点击生成',
+            panelTitle: '操作面板',
+            pasteGenerate: '粘贴并重新生成',
+            inputGenerate: '从输入栏中重新生成',
+            genDate: '生成日期',
+            paramStats: '参数统计',
+            type: '类型',
+            count: '数量',
+            toTop: '到顶部',
+            toBottom: '到底部',
+            copyParamName: '复制参数名',
+            copied: '已复制',
+            copyGroupName: '复制分组名',
+            locateInToc: '在目录中定位',
+            total: '总计',
+            generatedFrom: 'generated from',
+            generatedSuccess: 'successfully! Total',
+            params: 'parameters',
+            clipboardEmpty: '剪贴板为空',
+            clipboardError: '无法读取剪贴板，请确保已授予网页剪贴板权限',
+            inputEmpty: '输入栏为空，请先粘贴内容',
+            placeholder: '手动粘贴虚幻材质文本到这里，然后点击下方按钮生成...',
+            footer: '由材质参数提取工具生成',
+            reportTitle: '材质参数统计报告',
+            materialParamReport: '材质参数统计报告',
+            collectionParams: '材质参数集',
+            paramType: '类型',
+            desc: '描述',
+            default: '默认值',
+            defaultTexture: '默认贴图',
+            curveRes: '曲线资源',
+            paramCollection: '参数集',
+            sortPriority: '排序优先级',
+            ungrouped: '未分组 (None)',
+            other: 'Other'
+        },
+        en: {
+            toc: 'Table of Contents',
+            waiting: 'Waiting for Input',
+            waitingDesc: 'Click "Paste & Regenerate" on the right to read clipboard and generate report<br>Or manually paste in the input field on the right and click generate',
+            panelTitle: 'Control Panel',
+            pasteGenerate: 'Paste & Regenerate',
+            inputGenerate: 'Generate from Input',
+            genDate: 'Generated Date',
+            paramStats: 'Parameter Statistics',
+            type: 'Type',
+            count: 'Count',
+            toTop: 'To Top',
+            toBottom: 'To Bottom',
+            copyParamName: 'Copy Name',
+            copied: 'Copied',
+            copyGroupName: 'Copy Group',
+            locateInToc: 'Locate in TOC',
+            total: 'Total',
+            generatedFrom: 'Generated from',
+            generatedSuccess: 'successfully! Total',
+            params: 'parameters',
+            clipboardEmpty: 'Clipboard is empty',
+            clipboardError: 'Cannot read clipboard, please ensure clipboard permission is granted',
+            inputEmpty: 'Input field is empty, please paste content first',
+            placeholder: 'Paste Unreal material text here, then click the button below to generate...',
+            footer: 'Generated by Material Parameter Extractor',
+            reportTitle: 'Material Parameter Report',
+            materialParamReport: 'Material Parameter Report',
+            collectionParams: 'Collection Parameters',
+            paramType: 'Type',
+            desc: 'Description',
+            default: 'Default',
+            defaultTexture: 'Default Texture',
+            curveRes: 'Curve Resource',
+            paramCollection: 'Collection',
+            sortPriority: 'Sort Priority',
+            ungrouped: 'Ungrouped (None)',
+            other: 'Other'
+        }
+    };
+
+    let currentLang = 'zh';
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        document.getElementById('lang-toggle').textContent = currentLang === 'zh' ? 'EN' : '中';
+        applyLanguage();
+    }
+
+    function t(key) {
+        return i18n[currentLang][key] || key;
+    }
+
+    function applyLanguage() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (i18n[currentLang][key]) {
+                el.innerHTML = i18n[currentLang][key];
+            }
+        });
+        // 更新 placeholder
+        const textarea = document.getElementById('material-input');
+        if (textarea && i18n[currentLang].placeholder) {
+            textarea.placeholder = i18n[currentLang].placeholder;
+        }
+    }
+
     // ==================== 提取逻辑 ====================
     function extractMaterialParameters(inputText) {
         const parameters = [];
@@ -693,14 +862,13 @@
     async function copyParamName(name, btnElement) {
         try {
             await navigator.clipboard.writeText(name);
-            btnElement.textContent = '已复制';
+            btnElement.textContent = t('copied');
             btnElement.classList.add('copied');
             setTimeout(() => {
-                btnElement.textContent = '复制参数名';
+                btnElement.textContent = t('copyParamName');
                 btnElement.classList.remove('copied');
             }, 1500);
         } catch (err) {
-            // 降级方案
             const textarea = document.createElement('textarea');
             textarea.value = name;
             textarea.style.position = 'fixed';
@@ -710,10 +878,38 @@
             document.execCommand('copy');
             document.body.removeChild(textarea);
 
-            btnElement.textContent = '已复制';
+            btnElement.textContent = t('copied');
             btnElement.classList.add('copied');
             setTimeout(() => {
-                btnElement.textContent = '复制参数名';
+                btnElement.textContent = t('copyParamName');
+                btnElement.classList.remove('copied');
+            }, 1500);
+        }
+    }
+
+    async function copyGroupName(name, btnElement) {
+        try {
+            await navigator.clipboard.writeText(name);
+            btnElement.textContent = t('copied');
+            btnElement.classList.add('copied');
+            setTimeout(() => {
+                btnElement.textContent = t('copyGroupName');
+                btnElement.classList.remove('copied');
+            }, 1500);
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = name;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            btnElement.textContent = t('copied');
+            btnElement.classList.add('copied');
+            setTimeout(() => {
+                btnElement.textContent = t('copyGroupName');
                 btnElement.classList.remove('copied');
             }, 1500);
         }
@@ -725,6 +921,42 @@
         setTimeout(() => {
             el.classList.remove('highlight-scroll');
         }, 1200);
+    }
+
+    // ==================== 目录定位 ====================
+    function locateInToc(anchor) {
+        // 高亮目录项
+        const tocItems = document.querySelectorAll('#toc-list a');
+        tocItems.forEach(item => {
+            item.classList.remove('toc-highlight');
+        });
+
+        // 找到对应的目录项并高亮
+        const tocItem = Array.from(tocItems).find(item => {
+            const onclick = item.getAttribute('onclick') || '';
+            return onclick.includes(`'${anchor}'`);
+        });
+
+        if (tocItem) {
+            tocItem.classList.add('toc-highlight');
+            setTimeout(() => {
+                tocItem.classList.remove('toc-highlight');
+            }, 1200);
+
+            // 将目录项滚动到可视区域中间
+            const sidebar = document.getElementById('sidebar');
+            const itemTop = tocItem.offsetTop;
+            const sidebarHeight = sidebar.clientHeight;
+            const scrollTarget = itemTop - sidebarHeight / 2 + tocItem.clientHeight / 2;
+            sidebar.scrollTo({ top: Math.max(0, scrollTarget) });
+        }
+
+        // 同时跳转中间内容到对应位置
+        const el = document.getElementById(anchor);
+        if (el) {
+            el.scrollIntoView({ block: 'center' });
+            highlightHeading(el);
+        }
     }
 
     // ==================== 快速跳转 ====================
@@ -743,12 +975,12 @@
         try {
             const clipboardText = await navigator.clipboard.readText();
             if (!clipboardText.trim()) {
-                alert('剪贴板为空');
+                alert(t('clipboardEmpty'));
                 return;
             }
             doGenerate(clipboardText, true);
         } catch (err) {
-            alert('无法读取剪贴板，请确保已授予网页剪贴板权限');
+            alert(t('clipboardError'));
             console.error('Clipboard error:', err);
         }
     }
@@ -756,31 +988,27 @@
     function generateFromInput() {
         const inputText = document.getElementById('material-input').value;
         if (!inputText.trim()) {
-            alert('输入栏为空，请先粘贴内容');
+            alert(t('inputEmpty'));
             return;
         }
         doGenerate(inputText, false);
     }
 
     function doGenerate(inputText, fromClipboard) {
-        // 触发白屏动画
         triggerWhiteFlash();
 
         const parameters = extractMaterialParameters(inputText);
-        const now = new Date().toLocaleString('zh-CN');
+        const now = new Date().toLocaleString(currentLang === 'zh' ? 'zh-CN' : 'en-US');
 
-        // 统计
         const typeCounts = {};
         for (const p of parameters) {
             typeCounts[p.type] = (typeCounts[p.type] || 0) + 1;
         }
         const totalCount = parameters.length;
 
-        // 分离
         const collectionParams = parameters.filter(p => p.type === 'CollectionParameter');
         const normalParams = parameters.filter(p => p.type !== 'CollectionParameter');
 
-        // 排序
         normalParams.sort((a, b) => {
             const aEmpty = a.group === "" ? 0 : 1;
             const bEmpty = b.group === "" ? 0 : 1;
@@ -792,21 +1020,19 @@
             return a.name.localeCompare(b.name);
         });
 
-        // 分组
         const groups = {};
         for (const p of normalParams) {
-            const groupName = p.group || "未分组 (None)";
+            const groupName = p.group || t('ungrouped');
             if (!groups[groupName]) groups[groupName] = [];
             groups[groupName].push(p);
         }
 
         const sortedGroups = Object.keys(groups).sort((a, b) => {
-            if (a === "未分组 (None)") return -1;
-            if (b === "未分组 (None)") return 1;
+            if (a === t('ungrouped')) return -1;
+            if (b === t('ungrouped')) return 1;
             return a.localeCompare(b);
         });
 
-        // 生成锚点
         function makeAnchor(text) {
             return text.toLowerCase()
                 .replace(/ /g, '-')
@@ -829,34 +1055,37 @@
             tocHtml += `<li class="group-item"><a onclick="scrollToSection('${anchor}')">${escapeHtml(groupName)}</a></li>`;
         }
         if (collectionParams.length > 0) {
-            tocHtml += `<li class="group-item"><a onclick="scrollToSection('collection-params')">材质参数集</a></li>`;
+            tocHtml += `<li class="group-item"><a onclick="scrollToSection('collection-params')">${t('collectionParams')}</a></li>`;
         }
         document.getElementById('toc-list').innerHTML = tocHtml;
 
         // 构建报告内容
         let reportHtml = '';
 
-        // 标题
-        reportHtml += `<h1>材质参数统计报告</h1>`;
+        reportHtml += `<h1>${t('reportTitle')}</h1>`;
 
-        // 各组详情
         for (const groupName of sortedGroups) {
             const anchor = makeAnchor(groupName);
-            reportHtml += `<h2 id="${anchor}">${escapeHtml(groupName)}</h2>`;
+            reportHtml += `<h2 id="${anchor}">${escapeHtml(groupName)}`;
+            reportHtml += `<span class="group-actions">`;
+            reportHtml += `<button class="btn-group-action" onclick="copyGroupName('${escapeHtml(groupName)}', this)">${t('copyGroupName')}</button>`;
+            reportHtml += `<button class="btn-group-action" onclick="locateInToc('${anchor}')">${t('locateInToc')}</button>`;
+            reportHtml += `</span></h2>`;
+
             for (const param of groups[groupName]) {
                 reportHtml += `<div class="param-block">`;
                 reportHtml += `<div class="param-header">`;
                 reportHtml += `<div class="param-name"><code>${escapeHtml(param.name)}</code></div>`;
-                reportHtml += `<button class="btn-copy" onclick="copyParamName('${escapeHtml(param.name)}', this)">复制参数名</button>`;
+                reportHtml += `<button class="btn-copy" onclick="copyParamName('${escapeHtml(param.name)}', this)">${t('copyParamName')}</button>`;
                 reportHtml += `</div>`;
-                reportHtml += `<div class="param-prop">类型: ${escapeHtml(param.type)}</div>`;
+                reportHtml += `<div class="param-prop">${t('paramType')}: ${escapeHtml(param.type)}</div>`;
                 if (param.description) {
-                    reportHtml += `<div class="param-prop">描述: ${escapeHtml(param.description)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('desc')}: ${escapeHtml(param.description)}</div>`;
                 }
                 if (param.default !== undefined) {
                     let dv = String(param.default);
                     if (dv.startsWith("'") && dv.endsWith("'")) dv = dv.slice(1, -1);
-                    reportHtml += `<div class="param-prop">默认值: ${escapeHtml(dv)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('default')}: ${escapeHtml(dv)}</div>`;
                 }
                 if (param.default_texture) {
                     let tex = param.default_texture;
@@ -864,45 +1093,44 @@
                         const parts = tex.split("'");
                         tex = parts.length > 1 ? parts[parts.length - 2] : tex;
                     }
-                    reportHtml += `<div class="param-prop">默认贴图: ${escapeHtml(tex)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('defaultTexture')}: ${escapeHtml(tex)}</div>`;
                 }
                 if (param.curve) {
-                    reportHtml += `<div class="param-prop">曲线资源: ${escapeHtml(param.curve)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('curveRes')}: ${escapeHtml(param.curve)}</div>`;
                 }
                 if (param.collection) {
-                    reportHtml += `<div class="param-prop">参数集: ${escapeHtml(param.collection)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('paramCollection')}: ${escapeHtml(param.collection)}</div>`;
                 }
                 if (param.sort_priority !== undefined) {
-                    reportHtml += `<div class="param-prop">排序优先级: ${param.sort_priority}</div>`;
+                    reportHtml += `<div class="param-prop">${t('sortPriority')}: ${param.sort_priority}</div>`;
                 }
                 reportHtml += `</div>`;
             }
         }
 
-        // 材质参数集
         if (collectionParams.length > 0) {
-            reportHtml += `<h2 id="collection-params">材质参数集 (CollectionParameter)</h2>`;
+            reportHtml += `<h2 id="collection-params">${t('collectionParams')}</h2>`;
             for (const param of collectionParams) {
                 reportHtml += `<div class="param-block">`;
                 reportHtml += `<div class="param-header">`;
                 reportHtml += `<div class="param-name"><code>${escapeHtml(param.name)}</code></div>`;
-                reportHtml += `<button class="btn-copy" onclick="copyParamName('${escapeHtml(param.name)}', this)">复制参数名</button>`;
+                reportHtml += `<button class="btn-copy" onclick="copyParamName('${escapeHtml(param.name)}', this)">${t('copyParamName')}</button>`;
                 reportHtml += `</div>`;
-                reportHtml += `<div class="param-prop">类型: ${escapeHtml(param.type)}</div>`;
+                reportHtml += `<div class="param-prop">${t('paramType')}: ${escapeHtml(param.type)}</div>`;
                 if (param.description) {
-                    reportHtml += `<div class="param-prop">描述: ${escapeHtml(param.description)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('desc')}: ${escapeHtml(param.description)}</div>`;
                 }
                 if (param.collection) {
-                    reportHtml += `<div class="param-prop">参数集: ${escapeHtml(param.collection)}</div>`;
+                    reportHtml += `<div class="param-prop">${t('paramCollection')}: ${escapeHtml(param.collection)}</div>`;
                 }
                 if (param.sort_priority !== undefined) {
-                    reportHtml += `<div class="param-prop">排序优先级: ${param.sort_priority}</div>`;
+                    reportHtml += `<div class="param-prop">${t('sortPriority')}: ${param.sort_priority}</div>`;
                 }
                 reportHtml += `</div>`;
             }
         }
 
-        reportHtml += `<div class="footer">由材质参数提取工具生成</div>`;
+        reportHtml += `<div class="footer">${t('footer')}</div>`;
 
         document.getElementById('report-content').innerHTML = reportHtml;
 
@@ -912,7 +1140,6 @@
         document.getElementById('date-section').classList.remove('hidden');
         document.getElementById('divider-2').classList.remove('hidden');
 
-        // 更新右侧统计表格
         const rightTableBody = document.querySelector('#right-stats-table tbody');
         let rightTableHtml = '';
         const typeOrder = ['Scalar', 'Vector4', 'Texture2D', 'StaticSwitch', 'Curve', 'CollectionParameter'];
@@ -926,16 +1153,15 @@
                 rightTableHtml += `<tr><td>${escapeHtml(t)}</td><td>${count}</td></tr>`;
             }
         }
-        rightTableHtml += `<tr><td><strong>总计</strong></td><td><strong>${totalCount}</strong></td></tr>`;
+        rightTableHtml += `<tr><td><strong>${t('total')}</strong></td><td><strong>${totalCount}</strong></td></tr>`;
         rightTableBody.innerHTML = rightTableHtml;
         document.getElementById('stats-section').classList.remove('hidden');
 
         // 显示快速跳转按钮
         document.getElementById('quick-nav-section').classList.remove('hidden');
 
-        // 成功提示
-        const source = fromClipboard ? '剪贴板' : '输入栏';
-        showToast(`已从${source}生成成功！共 ${totalCount} 个参数`);
+        const source = fromClipboard ? (currentLang === 'zh' ? '剪贴板' : 'clipboard') : (currentLang === 'zh' ? '输入栏' : 'input field');
+        showToast(`${t('generatedFrom')} ${source} ${t('generatedSuccess')} ${totalCount} ${t('params')}`);
     }
 
     function scrollToSection(id) {
