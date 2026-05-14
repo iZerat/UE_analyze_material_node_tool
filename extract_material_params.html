@@ -942,7 +942,7 @@
             tocItem.classList.add('toc-highlight');
             setTimeout(() => {
                 tocItem.classList.remove('toc-highlight');
-            }, 1200);
+            }, 2000);
 
             // 将目录项滚动到可视区域中间
             const sidebar = document.getElementById('sidebar');
@@ -950,13 +950,6 @@
             const sidebarHeight = sidebar.clientHeight;
             const scrollTarget = itemTop - sidebarHeight / 2 + tocItem.clientHeight / 2;
             sidebar.scrollTo({ top: Math.max(0, scrollTarget) });
-        }
-
-        // 同时跳转中间内容到对应位置
-        const el = document.getElementById(anchor);
-        if (el) {
-            el.scrollIntoView({ block: 'center' });
-            highlightHeading(el);
         }
     }
 
