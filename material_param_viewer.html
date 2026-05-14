@@ -394,6 +394,11 @@
             color: #fff;
             border-color: #2da44e;
         }
+        .btn-copy.copied:hover {
+            background-color: #2da44e;
+            color: #fff;
+            border-color: #2da44e;
+        }
         .group-actions {
             display: flex;
             gap: 8px;
@@ -417,6 +422,11 @@
             overflow: hidden;
         }
         .btn-group-action.copied {
+            background-color: #2da44e;
+            color: #fff;
+            border-color: #2da44e;
+        }
+        .btn-group-action.copied:hover {
             background-color: #2da44e;
             color: #fff;
             border-color: #2da44e;
@@ -647,9 +657,11 @@
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
         document.getElementById('lang-toggle').textContent = currentLang === 'zh' ? 'EN' : '中';
         applyLanguage();
-        // 如果有已生成的报告，重新生成以应用新语言
+        // 如果有已生成的报告，重新生成以应用新语言（不显示 toast）
         if (lastInputText) {
+            suppressToast = true;
             doGenerate(lastInputText, lastFromClipboard);
+            suppressToast = false;
         }
     }
 
@@ -674,6 +686,7 @@
     // ==================== 全局状态 ====================
     let lastInputText = '';
     let lastFromClipboard = false;
+    let suppressToast = false;
 
     // ==================== 提取逻辑 ====================
     function extractMaterialParameters(inputText) {
@@ -1183,8 +1196,10 @@
         // 显示快速跳转按钮
         document.getElementById('quick-nav-section').classList.remove('hidden');
 
-        const source = fromClipboard ? (currentLang === 'zh' ? '剪贴板' : 'clipboard') : (currentLang === 'zh' ? '输入栏' : 'input field');
-        showToast(`${t('generatedFrom')} ${source} ${t('generatedSuccess')} ${totalCount} ${t('params')}`);
+        if (!suppressToast) {
+            const source = fromClipboard ? (currentLang === 'zh' ? '剪贴板' : 'clipboard') : (currentLang === 'zh' ? '输入栏' : 'input field');
+            showToast(`${t('generatedFrom')} ${source} ${t('generatedSuccess')} ${totalCount} ${t('params')}`);
+        }
     }
 
     function scrollToSection(id) {
