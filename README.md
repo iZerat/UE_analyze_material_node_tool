@@ -37,7 +37,7 @@
 1. 确保已安装 Python 3
 2. 双击运行 `start_server.bat`
 3. 脚本会自动打开浏览器访问 `http://localhost:8080/extract_material_params.html`
-4. 点击 **粘贴并重新生成**，首次允许剪贴板权限后，后续不再弹窗
+4. 点击 **粘贴并重新生成**，浏览器可能会询问剪贴板权限，首次允许剪贴板权限后，后续不再弹窗
 
 > 终端窗口即为服务器进程，使用期间请勿关闭。用完后关闭浏览器标签页，再关闭终端即可。
 
@@ -53,8 +53,6 @@ python extract_material_params.py
 脚本会自动扫描当前目录下的 `.txt` 文件，提取参数后输出到同级目录。
 
 ## GitHub Pages 在线预览
-
-本仓库已配置 GitHub Pages，可直接在线访问：
 
 👉 **[点击在线预览](https://iZerat.github.io/extract_material_params/extract_material_params.html)**
 
