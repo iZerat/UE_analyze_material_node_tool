@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Extract Material Params</title>
+    <!-- v20250515-2305 -->
     <style>
         * {
             box-sizing: border-box;
@@ -488,6 +489,8 @@
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <!-- 顶部提示 -->
@@ -724,21 +727,33 @@
 
                 // 获取类型
                 let paramType = "Unknown";
-                const classMatch = lines[nodeStart].match(/Begin Object Class=([^\s]+)/);
+                let classMatch = lines[nodeStart].match(/Begin Object Class=([^\s]+)/);
+                // 如果 Begin Object Class= 没找到，尝试从 Name 中提取类名
+                if (!classMatch && lines[nodeStart].includes('Begin Object Name=')) {
+                    const nameMatch = lines[nodeStart].match(/Begin Object Name="([^"]+)"/);
+                    if (nameMatch) {
+                        const fakeClass = nameMatch[1];
+                        classMatch = [null, fakeClass];
+                    }
+                }
                 if (classMatch) {
                     const fullClass = classMatch[1];
                     if (fullClass.includes('ScalarParameter')) paramType = "Scalar";
                     else if (fullClass.includes('VectorParameter')) paramType = "Vector4";
-                    else if (fullClass.includes('TextureSampleParameter2D')) paramType = "Texture2D";
+                    else if (fullClass.includes('TextureSampleParameter')) paramType = "Texture2D";
+                    else if (fullClass.includes('TextureObjectParameter')) paramType = "Texture2D";
                     else if (fullClass.includes('StaticSwitchParameter')) paramType = "StaticSwitch";
+                    else if (fullClass.includes('StaticBoolParameter')) paramType = "StaticSwitch";
+                    else if (fullClass.includes('StaticComponentMaskParameter')) paramType = "StaticSwitch";
                     else if (fullClass.includes('CurveAtlasRowParameter')) paramType = "Curve";
                     else if (fullClass.includes('CollectionParameter')) paramType = "CollectionParameter";
+                    else if (fullClass.includes('FontSampleParameter')) paramType = "Texture2D";
                     else if (fullClass.includes('MaterialExpressionTransform')) paramType = "NonParameter";
                     else paramType = "Other";
                 }
 
-                if (paramType === "Unknown" || paramType === "NonParameter") {
-                    if (paramType !== "Other") continue;
+                if (paramType === "Unknown" || paramType === "NonParameter" || paramType === "Other") {
+                    continue;
                 }
 
                 // 搜索 Group
@@ -846,13 +861,12 @@
             }
         }
 
-        // 去重
+        // 去重：按参数名去重，同一参数名只保留第一次遇到的
         const seen = new Set();
         const uniqueParams = [];
         for (const p of parameters) {
-            const key = p.name + '|' + p.type;
-            if (!seen.has(key)) {
-                seen.add(key);
+            if (!seen.has(p.name)) {
+                seen.add(p.name);
                 uniqueParams.push(p);
             }
         }
