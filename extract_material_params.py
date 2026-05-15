@@ -74,6 +74,8 @@ def extract_material_parameters(input_text):
                     param_type = "Vector4"
                 elif 'TextureSampleParameter2D' in full_class:
                     param_type = "Texture2D"
+                elif 'TextureObjectParameter' in full_class:
+                    param_type = "Texture2D"
                 elif 'StaticSwitchParameter' in full_class:
                     param_type = "StaticSwitch"
                 elif 'CurveAtlasRowParameter' in full_class:
