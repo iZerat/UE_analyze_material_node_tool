@@ -68,7 +68,15 @@ python UE_extract_material_node_params.py
 # 按提示选择文件 → 选择输出格式（TXT / Markdown / HTML）→ 完成
 ```
 
-脚本会自动扫描当前目录下的 `.txt` 文件，提取参数后输出到同级目录。
+脚本会自动扫描当前目录下的 `.txt` 文件，提取参数后输出到同级目录，文件名格式为：
+
+| 输出格式 | 文件名模板 |
+| --- | --- |
+| TXT | `{材质名}_material_parameter_statistical_report.txt` |
+| Markdown | `{材质名}_material_parameter_statistical_report.md` |
+| HTML | `{材质名}_material_parameter_statistical_report.html` |
+
+> 若无法从文本中识别材质名称，则使用原 `.txt` 文件名（不含扩展名）作为前缀。
 
 ---
 
