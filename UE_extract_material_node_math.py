@@ -720,10 +720,12 @@ def generate_pseudo_code(nodes):
         mat_name = m.group(1).split('.')[-1]
 
     lines = []
-    lines.append(f'// ============================================================')
-    lines.append(f'// Material: {mat_name}')
-    lines.append(f'// Generated Pseudo Code')
-    lines.append(f'// ============================================================')
+    lines.append(f'================================================================================')
+    lines.append(f'{mat_name} 材质节点运算伪代码')
+    lines.append(f'源文件: {mat_name}.txt')
+    from datetime import datetime
+    lines.append(f'生成日期: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+    lines.append(f'================================================================================')
     lines.append('')
 
     # NamedReroute 声明
@@ -820,7 +822,7 @@ def main():
 
     # 生成输出文件名
     base_name = os.path.splitext(os.path.basename(filepath))[0]
-    output_path = f'{base_name}_pseudo.txt'
+    output_path = f'{base_name}_material_node_pseudo.txt'
 
     if not check_overwrite(output_path):
         print('已取消，未写入文件。')
@@ -844,7 +846,11 @@ def main():
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(pseudo_code)
-        print(f'成功生成伪代码: {output_path}')
+        print('
+' + '=' * 60)
+    print('完成！')
+    print(f'伪代码已保存到: {output_path}')
+    print('=' * 60)
     except Exception as e:
         print(f'[错误] 写入文件失败: {e}')
         sys.exit(1)
