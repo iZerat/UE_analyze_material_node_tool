@@ -103,10 +103,12 @@ python UE_extract_material_node_math.py
 - 材质输出赋值（BaseColor、Metallic、Roughness 等）
 - 完整的运算树（含分支节点、材质函数调用）
 
-## 参数提取网页截图展示
+## 效果展示
+
+### 参数提取网页截图展示
 ![UE_extract_material_node.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/UE_extract_material_node.png)
 
-## 节点运算伪代码示例
+### 节点运算伪代码示例
 ```text
 // Material: M_Mannequin
 
