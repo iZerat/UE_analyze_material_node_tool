@@ -95,7 +95,7 @@ python extract_material_math.py
 
 ## GitHub Pages 在线预览
 
-👉 **[点击在线预览](https://izerat.github.io/UE_extract_material_params/)**（仅支持参数统计功能）
+👉 **[点击在线预览](https://izerat.github.io/UE_extract_material_params.html)**（仅支持参数统计功能）
 
 ## 截图展示
 
