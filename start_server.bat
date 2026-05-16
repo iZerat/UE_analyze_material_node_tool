@@ -9,7 +9,7 @@ echo.
 :: 检查 Python 是否可用
 python -c "import http.server" >nul 2>&1
 if %errorlevel% == 0 (
-    start "" "http://localhost:8080/extract_material_params.html"
+    start "" "http://localhost:8080/UE_extract_material_node_params.html"
     python -m http.server 8080
     goto :end
 )
@@ -17,7 +17,7 @@ if %errorlevel% == 0 (
 :: 检查 Python3
 python3 -c "import http.server" >nul 2>&1
 if %errorlevel% == 0 (
-    start "" "http://localhost:8080/extract_material_params.html"
+    start "" "http://localhost:8080/UE_extract_material_node_params.html"
     python3 -m http.server 8080
     goto :end
 )

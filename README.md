@@ -27,10 +27,10 @@
 
 | 文件 | 说明 | 对应功能 |
 | --- | --- | --- |
-| `extract_material_params.html` | 浏览器打开即可使用，纯前端实现，无需后端。提供参数统计报告的可视化界面 | 参数提取与可视化 |
-| `extract_material_params.py` | Python 脚本版，支持批量处理由虚幻材质节点文本保存的 `.txt` 文件，输出 TXT / Markdown / HTML 三种格式 | 参数提取与可视化 |
+| `UE_extract_material_node_params.html` | 浏览器打开即可使用，纯前端实现，无需后端。提供参数统计报告的可视化界面 | 参数提取与可视化 |
 | `start_server.bat` | Windows 批处理脚本，一键启动本地 HTTP 服务器（解决浏览器剪贴板权限问题） | 参数提取与可视化 |
-| `extract_material_math.py` | 后续开发的拓展功能，从同一来源的 UE 材质复制文本中提取节点运算关系，输出为伪代码（`.txt` 格式），便于分析材质计算逻辑 | 节点运算关系提取 |
+| `UE_extract_material_node_params.py` | Python 脚本版，支持批量处理由虚幻材质节点文本保存的 `.txt` 文件，输出 TXT / Markdown / HTML 三种格式 | 参数提取与可视化 |
+| `UE_extract_material_node_math.py` | 后续开发的拓展功能，从同一来源的 UE 材质复制文本中提取节点运算关系，输出为伪代码（`.txt` 格式），便于分析材质计算逻辑 | 节点运算关系提取 |
 
 ## 使用方法
 
@@ -38,7 +38,7 @@
 
 #### 方法一：浏览器直接打开
 
-1. 双击打开 `extract_material_params.html`
+1. 双击打开 `UE_extract_material_node_params.html`
 2. 在虚幻引擎 **材质编辑器** 中，按 **Ctrl+A** 全选所有节点，再按 **Ctrl+C** 复制
 3. 将剪贴板中的文本粘贴到右侧「操作面板」的输入框中
 4. 点击 **从输入栏中重新生成**，即可查看报告
@@ -49,7 +49,7 @@
 
 1. 确保已安装 Python 3
 2. 双击运行 `start_server.bat`
-3. 脚本会自动打开浏览器访问 `http://localhost:8080/extract_material_params.html`
+3. 脚本会自动打开浏览器访问 `http://localhost:8080/UE_extract_material_node_params.html`
 4. 点击 **粘贴并重新生成**，浏览器可能会询问剪贴板权限，首次允许剪贴板权限后，后续不再弹窗
 
 > 终端窗口即为服务器进程，使用期间请勿关闭。
@@ -63,7 +63,7 @@
 # 2. 粘贴到新建的空白 .txt 文件中保存
 # 3. 将该 .txt 文件放入脚本同级目录
 
-python extract_material_params.py
+python UE_extract_material_node_params.py
 
 # 按提示选择文件 → 选择输出格式（TXT / Markdown / HTML）→ 完成
 ```
@@ -83,7 +83,7 @@ python extract_material_params.py
 # 2. 粘贴到新建的空白 .txt 文件中保存
 # 3. 将该 .txt 文件放入脚本同级目录
 
-python extract_material_math.py
+python UE_extract_material_node_math.py
 
 # 按提示选择文件 → 确认覆盖 → 完成
 ```
@@ -95,7 +95,7 @@ python extract_material_math.py
 
 ## GitHub Pages 在线预览
 
-👉 **[点击在线预览](https://izerat.github.io/UE_extract_material_params/UE_extract_material_params.html)**（仅支持参数统计功能）
+👉 **[点击在线预览](https://izerat.github.io/UE_extract_material_params/UE_extract_material_node_params.html)**（仅支持参数统计功能）
 
 ## 截图展示
 
