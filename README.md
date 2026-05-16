@@ -88,21 +88,19 @@ python UE_extract_material_node_math.py
 # 按提示选择文件 → 确认覆盖 → 完成
 ```
 
-脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{原文件名}_pseudo.txt`，包含：
+脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{base_name}_material_node_pseudo.txt`，包含：
 - NamedReroute 变量声明
 - 材质输出赋值（BaseColor、Metallic、Roughness 等）
 - 完整的运算树（含分支节点、材质函数调用）
 
 ## GitHub Pages 在线预览
 
-👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能）
+👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能，节点运算关系提取需要python脚本）
 
-## 截图展示
-
-### 参数统计报告
+## 参数提取网页截图展示
 ![UE_extract_material_node.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/UE_extract_material_node.png)
 
-### 节点运算伪代码示例
+## 节点运算伪代码示例
 ```text
 // Material: M_Mannequin
 
