@@ -96,7 +96,7 @@ python UE_extract_material_node_math.py
 # 按提示选择文件 → 确认覆盖 → 完成
 ```
 
-脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{base_name}_material_node_pseudo.txt`，包含：
+脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{base_name}_material_node_pseudocode.txt`，包含：
 - NamedReroute 变量声明
 - 材质输出赋值（BaseColor、Metallic、Roughness 等）
 - 完整的运算树（含分支节点、材质函数调用）

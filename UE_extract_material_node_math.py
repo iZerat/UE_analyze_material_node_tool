@@ -825,7 +825,7 @@ def main():
 
     # 生成输出文件名
     base_name = os.path.splitext(os.path.basename(filepath))[0]
-    output_path = f'{base_name}_material_node_pseudo.txt'
+    output_path = f'{base_name}_material_node_pseudocode.txt'
 
     if not check_overwrite(output_path):
         print('操作已取消')
