@@ -1,4 +1,4 @@
-# UE Extract Material Params
+# UE Analyze Material Node
 
 虚幻引擎材质参数提取与可视化工具集。在虚幻引擎材质编辑器中全选所有节点（Ctrl+A）并复制（Ctrl+C），将剪贴板中的纯文本粘贴到本工具，即可生成结构化的参数统计报告或节点运算关系伪代码。
 
@@ -95,7 +95,7 @@ python UE_extract_material_node_math.py
 
 ## GitHub Pages 在线预览
 
-👉 **[点击在线预览](https://izerat.github.io/UE_extract_material_params/UE_extract_material_node_params.html)**（仅支持参数统计功能）
+👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能）
 
 ## 截图展示
 
@@ -129,7 +129,7 @@ MaterialOutput.Metallic = Lerp(Metallic, ScalarParameter("MetalPaintMetallic", D
 
 | 脚本 | 关注点 | 输出 |
 | --- | --- | --- |
-| `extract_material_params.py` | 材质**参数**（ScalarParameter、VectorParameter、TextureSampleParameter 等） | 结构化统计报告 |
-| `extract_material_math.py` | 材质**运算关系**（节点连接、分支选择、函数调用） | 伪代码 |
+| `UE_extract_material_node_params.py` | 材质**参数**（ScalarParameter、VectorParameter、TextureSampleParameter 等） | 结构化统计报告 |
+| `UE_extract_material_node_math.py` | 材质**运算关系**（节点连接、分支选择、函数调用） | 伪代码 |
 
 可根据需求单独或组合使用。
