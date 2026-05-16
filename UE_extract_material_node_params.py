@@ -1041,11 +1041,11 @@ def main():
         output_base = os.path.splitext(os.path.basename(input_file))[0]
 
     if output_format == 'txt':
-        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_report.txt")
+        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_statistical_report.txt")
     elif output_format == 'md':
-        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_report.md")
+        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_statistical_report.md")
     else:  # html
-        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_report.html")
+        output_file = os.path.join(script_dir, f"{output_base}_material_parameter_statistical_report.html")
 
     # 检查是否覆盖
     if not check_overwrite(output_file):
