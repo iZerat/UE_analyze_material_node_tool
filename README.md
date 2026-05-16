@@ -100,7 +100,7 @@ python UE_extract_material_node_math.py
 ## 截图展示
 
 ### 参数统计报告
-![extract_material_params.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/extract_material_params.png)
+![UE_extract_material_node.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/UE_extract_material_node.png)
 
 ### 节点运算伪代码示例
 ```text
