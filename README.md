@@ -25,16 +25,16 @@
 
 ## 文件说明
 
-| 文件 | 说明 |
-| --- | --- |
-| `extract_material_params.html` | 浏览器打开即可使用，纯前端实现，无需后端。提供参数统计报告的可视化界面 |
-| `extract_material_params.py` | Python 脚本版，支持批量处理由虚幻材质节点文本保存的 `.txt` 文件，输出 TXT / Markdown / HTML 三种格式 |
-| `start_server.bat` | Windows 批处理脚本，一键启动本地 HTTP 服务器（解决浏览器剪贴板权限问题） |
-| `extract_material_math.py` | 后续开发的拓展功能，从同一来源的 UE 材质复制文本中提取节点运算关系，输出为伪代码（`.txt` 格式），便于分析材质计算逻辑 |
+| 文件 | 说明 | 对应功能 |
+| --- | --- | --- |
+| `extract_material_params.html` | 浏览器打开即可使用，纯前端实现，无需后端。提供参数统计报告的可视化界面 | 参数提取与可视化 |
+| `extract_material_params.py` | Python 脚本版，支持批量处理由虚幻材质节点文本保存的 `.txt` 文件，输出 TXT / Markdown / HTML 三种格式 | 参数提取与可视化 |
+| `start_server.bat` | Windows 批处理脚本，一键启动本地 HTTP 服务器（解决浏览器剪贴板权限问题） | 参数提取与可视化 |
+| `extract_material_math.py` | 后续开发的拓展功能，从同一来源的 UE 材质复制文本中提取节点运算关系，输出为伪代码（`.txt` 格式），便于分析材质计算逻辑 | 节点运算关系提取 |
 
 ## 使用方法
 
-### 功能一：参数提取与可视化
+### 参数提取与可视化
 
 #### 方法一：浏览器直接打开
 
@@ -72,11 +72,11 @@ python extract_material_params.py
 
 ---
 
-### 功能二：节点运算关系伪代码提取
+### 节点运算关系伪代码提取
 
 适用于需要分析材质内部计算逻辑、排查节点连接问题、或文档化材质运算流程的场景。
 
-#### 方法一：Python 脚本批量处理
+#### Python 脚本批量处理
 
 ```bash
 # 1. 在虚幻材质编辑器中复制节点文本（Ctrl+A → Ctrl+C）
