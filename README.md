@@ -4,7 +4,7 @@
 
 > ⚠️ 虚幻材质资产本身是 `.uasset` 二进制文件，无法直接读取，须通过虚幻引擎编辑器复制节点获取纯文本内容。
 
-👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能，节点运算关系提取需要python脚本）
+👉 **[GitHub Pages 在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能，节点运算关系提取需要python脚本）
 
 ## 功能特性
 
