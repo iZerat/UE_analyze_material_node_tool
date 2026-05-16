@@ -1,4 +1,4 @@
-# Extract Material Params
+# UE Extract Material Params
 
 虚幻引擎材质参数提取与可视化工具。在虚幻引擎材质编辑器中全选所有节点（Ctrl+A）并复制（Ctrl+C），将剪贴板中的纯文本粘贴到本工具，即可生成结构化的参数统计报告。
 
